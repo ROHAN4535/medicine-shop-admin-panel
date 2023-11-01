@@ -1,0 +1,29 @@
+.form{
+    padding: 8% 5%;
+    
+}
+input{
+    margin: 10px;
+    padding: 5px 3px;
+    
+}
+
+input[type=text]:focus,input[type=number]:focus{
+    background-color: lightblue;
+}
+.button{
+    font: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #8a2b06;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 3px 4px;
+    
+}
+.button:hover,
+.button:active{
+    background-color: #5a1a01;
+    border-color: #5a1a01;
+    color: white;
+}
