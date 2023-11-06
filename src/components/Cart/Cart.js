@@ -1,49 +1,41 @@
 import { useContext } from "react";
-import Modal from '../UI/Modal';
-import classes from './Cart.module.css';
-import CartContext from "../../Store/Cart-Context";
-import CartItem from "./CartItem";
+import Modal from "../UI/Modal";
+import CartContext from "../Store/cart-context";
 
 const Cart = (props) => {
   const cartCntx = useContext(CartContext);
-  
-  const cartItemRemoveHandler = (id) => {
-    cartCntx.removeItem(id)
-  };
-  const cartItemAddHandler = (item) =>{
-    cartCntx.addItem({...item,quantity:1});
-    cartCntx.calculateTotal();
-  }
-  cartCntx.calculateTotal();
+
   const cartItems = (
-    <ul className={classes["cart-items"]}>
-      {cartCntx.items.map((item) => (
-        <CartItem
-          key={item.id}
-          name={item.name}
-          price={item.price}
-          quantity={item.quantity}
-          onRemove={cartItemRemoveHandler.bind(null, item.id)}
-          onAdd={cartItemAddHandler.bind(null,item)}
-        />
+    <ul>
+      {cartCntx.items.map((item, idx) => (
+        <li key={idx}>
+          <div>
+            <h2>{item.name}</h2>
+            <p>{item.price}Rs.</p>
+            <p>Qty. {item.quantity}</p>
+          </div>
+        </li>
       ))}
     </ul>
   );
-
+  const totalAmount = cartCntx.items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   return (
     <Modal onHideCart={props.onHideCart}>
       {cartItems}
-      <div className={classes.total}>
-        <span>Total Amount</span>
-        <span>${cartCntx.totalAmount.toFixed(2)}</span>
+      <div>
+        <span>Total Amount =</span>
+        <span>{totalAmount}</span>
       </div>
-      <div className={classes.actions}>
-        <button className={classes["button--alt"]} onClick={props.onHideCart}>
-          Close
-        </button>
-        <button className={classes.button}>Order</button>
+      <div>
+        <button>Cancel</button>
+        <button>Place Order</button>
       </div>
     </Modal>
   );
 };
+
 export default Cart;
+

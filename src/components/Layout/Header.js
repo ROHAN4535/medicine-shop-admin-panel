@@ -1,15 +1,17 @@
-import HeaderCartButton from "./HeaderCartButton";
-import classes from "./Header.module.css";
-import { Fragment } from "react";
+import { useContext } from "react";
+import CartContext from "../Store/cart-context";
 
 const Header = (props) => {
+  const cartCntx = useContext(CartContext);
+  let q = 0;
+  cartCntx.items.forEach((item) => {
+    q += Number(item.quantity);
+  });
   return (
-    <Fragment>
-      <header className={classes.header}>
-        <h1>Medicine Shop</h1>
-        <HeaderCartButton onClick={props.onShowCart} />
-      </header>
-    </Fragment>
+    <section>
+      <h2>Medicine Store</h2>
+        <button onClick={props.onShowCart}>Cart {q}</button>
+    </section>
   );
 };
 

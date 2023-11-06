@@ -1,9 +1,11 @@
-import Form from "./components/Form/Form"
-
 import { useState } from "react";
+import "./App.css";
+import Form from "./components/Form/Form";
 import Header from "./components/Layout/Header";
-import Cart from "./components/Cart/Cart";
-import CartProvider from "./Store/CartProvider";
+import MedicineList from "./components/MedicineList/medicineList";
+import CartProvider from "./components/Store/CartProvider";
+import ListProvider from "./components/Store/ListProvider";
+import Cart from "./components/Cart/Cart"
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
@@ -13,18 +15,20 @@ function App() {
   const hideCartHandler = () => {
     setCartIsShown(false);
   };
-
   return (
-    <CartProvider>
-      {cartIsShown && <Cart onHideCart={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} />
-      <main>
-        <Form />
-
-      </main>
-    </CartProvider>
+    <div className="App">
+      <CartProvider>
+        <ListProvider>
+          {cartIsShown && <Cart onHideCart={hideCartHandler} />}
+          <Header onShowCart={showCartHandler} />
+          <Form />
+          <MedicineList />
+        </ListProvider>
+      </CartProvider>
+    </div>
   );
 }
+
 export default App;
 
 
